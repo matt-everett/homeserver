@@ -1,0 +1,7 @@
+- name: Home Server
+  hosts: homeserver
+  become: yes
+  gather_facts: True
+  roles:
+  - fileserver
+  - dev 
