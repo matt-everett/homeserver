@@ -3,5 +3,7 @@
   become: yes
   gather_facts: True
   roles:
+  - basic
   - fileserver
-  - dev 
+  - dev
+  - pydev

@@ -3,5 +3,8 @@
   with_items:
   - zfsutils-linux
   - samba
+  - smbclient
+  - cifs-utils
+  - transmission-cli
   tags:
   - packages
