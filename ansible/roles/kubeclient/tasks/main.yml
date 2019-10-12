@@ -1,0 +1,14 @@
+- name: Configure .bashrc for kubectl
+  blockinfile:
+    path: /home/{{ ansible_user }}/.bashrc
+    marker: "# {mark} KUBE TOOLS CONFIG"
+    block: |
+      source <(kubectl completion bash)
+      source <(helm completion bash)
+
+      export KUBECONFIG="${HOME}/.kube/config"
+      for file in ${HOME}/.kube/*; do
+          if [[ -f ${file} && $(basename ${file}) == *'-config'* ]]; then
+              export KUBECONFIG="${KUBECONFIG}:${file}"
+          fi
+      done

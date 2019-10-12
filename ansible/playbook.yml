@@ -7,3 +7,5 @@
   - fileserver
   - dev
   - pydev
+  - helm
+  - kubeclient
