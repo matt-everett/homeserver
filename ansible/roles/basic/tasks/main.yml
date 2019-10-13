@@ -1,5 +1,6 @@
 - name: Install basic necessities
   apt: name={{ item }} state=present
+  become: yes
   with_items:
   - sshpass
   - python

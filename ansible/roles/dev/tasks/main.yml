@@ -1,4 +1,5 @@
 - name: Install development packages
+  become: yes
   apt: name={{ item }} state=present
   with_items:
   - tmux
@@ -8,14 +9,21 @@
 - name: Clone tmux-plugins manager
   git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: /home/{{ ansible_user }}/.tmux/plugins/
+    dest: "/home/{{ ansible_user }}/.tmux/plugins/"
 - name: Add tmux and vim configuration files
   copy:
-    src: {{ role_path }}/files/
-    dest: /home/{{ ansible_user }}/
+    src: "{{ role_path }}/files/"
+    dest: "/home/{{ ansible_user }}/"
 - name: Configure .bashrc for vim keys
   blockinfile:
-    path: /home/{{ ansible_user }}/.bashrc
+    path: "/home/{{ ansible_user }}/.bashrc"
     marker: "# {mark} DEV ROLE CONFIG"
     block: |
       set -o vi
+- name: Install vim-plug
+  command: "curl -fLo /home/{{ ansible_user }}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  args:
+    creates: "/home/{{ ansible_user }}/.vim/autoload/plug.vim"
+    warn: no
+- name: vim-plug install 
+  command: "vim +PlugInstall +qall +silent"

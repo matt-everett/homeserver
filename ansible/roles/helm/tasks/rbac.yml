@@ -1,5 +1,6 @@
 ---
 - name: create kubectl soft link
+  become: yes
   file:
     src: "/usr/local/bin/kubectl"
     dest: "/usr/bin/kubectl"

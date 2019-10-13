@@ -1,11 +1,11 @@
 - name: Home Server
   hosts: homeserver
-  become: yes
   gather_facts: True
   roles:
   - basic
   - fileserver
   - dev
+  - espdev
   - pydev
   - helm
   - kubeclient

@@ -1,4 +1,5 @@
 - name: Install basic necessities
+  become: yes
   apt: name={{ item }} state=present
   with_items:
   - python

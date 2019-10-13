@@ -1,5 +1,6 @@
 - name: Install file server packages
   apt: name={{ item }} state=present
+  become: yes
   with_items:
   - zfsutils-linux
   - samba
