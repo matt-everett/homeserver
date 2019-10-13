@@ -9,7 +9,7 @@
 - name: Clone tmux-plugins manager
   git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: "/home/{{ ansible_user }}/.tmux/plugins/"
+    dest: "/home/{{ ansible_user }}/.tmux/plugins/tpm/"
 - name: Add tmux and vim configuration files
   copy:
     src: "{{ role_path }}/files/"
