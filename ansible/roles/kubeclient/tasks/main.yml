@@ -1,7 +1,7 @@
 - name: Configure .bashrc for kubectl
   blockinfile:
     path: /home/{{ ansible_user }}/.bashrc
-    marker: "# {mark} KUBE TOOLS CONFIG"
+    marker: "# {mark} KUBECLIENT ROLE CONFIG"
     block: |
       source <(kubectl completion bash)
       source <(helm completion bash)

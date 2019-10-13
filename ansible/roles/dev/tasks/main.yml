@@ -5,3 +5,17 @@
   - vim
   tags:
   - packages
+- name: Clone tmux-plugins manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: /home/{{ ansible_user }}/.tmux/plugins/
+- name: Add tmux and vim configuration files
+  copy:
+    src: {{ role_path }}/files/
+    dest: /home/{{ ansible_user }}/
+- name: Configure .bashrc for vim keys
+  blockinfile:
+    path: /home/{{ ansible_user }}/.bashrc
+    marker: "# {mark} DEV ROLE CONFIG"
+    block: |
+      set -o vi
