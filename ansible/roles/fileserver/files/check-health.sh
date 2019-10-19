@@ -12,14 +12,17 @@ logFile='/var/log/zfs-health.log'
 healthy=1
 outage=0
 
+# Create a log entry
 log () {
-    echo "[$(now)] ${1}" | tee -a ${logFile}
+    echo "[$(now)] INFO: ${1}" | tee -a ${logFile}
 }
 
+# Format the supplied datetime
 formatted_date () {
     echo $(date -d "${1}" +${DATE_FORMAT})
 }
 
+# Get the current datetime
 now () {
     echo $(date +${DATE_FORMAT})
 }
@@ -37,10 +40,7 @@ send_email () {
 
     # Email body
     echo -e "\n<html><head></head><body><pre style=\"font-family: monospace\">" >> ${report}
-    for p in ${zpools[@]}; do
-        zpool status -v ${p} >> ${report}
-        echo "" >> ${report}
-    done
+    zpool status -v >> ${report}
     echo "</pre></body></html>" >> ${report}
 
     # Send the email
@@ -62,9 +62,8 @@ fi
 # Read the last status
 read lastChecked lastStatus lastSent < <(cat ${lastHealthFile})
 
-zpools=(store data)
-for p in ${zpools[@]}; do
-    h=$(zpool list -H -o health ${p})
+# Discover the overall status
+for h in $(zpool list -H -o health); do
     if [[ ${h} != "ONLINE" ]]; then
         healthy=0
         if [[ ${h} != "DEGRADED" ]]; then
@@ -73,6 +72,7 @@ for p in ${zpools[@]}; do
     fi
 done
 
+# Rolled-up classification of the overall status
 important=1
 currentStatus=OUTAGE
 if [[ ${healthy} == 1 && ${outage} == 0 ]]; then
@@ -82,8 +82,10 @@ elif [[ ${healthy} == 0 && ${outage} == 0 ]]; then
     currentStatus=DEGRADED
 fi
 
-# currentStatus=${1}
+# Override the detected status for testing
+currentStatus=${1:-${currentStatus}}
 
+# Determine what action to take
 currentLevel=${STATUSES[${currentStatus}]}
 lastLevel=${STATUSES[${lastStatus}]}
 log "Current: ${currentStatus} (${currentLevel}) Last: ${lastStatus} (${lastLevel})"
@@ -109,6 +111,7 @@ else
     fi
 fi
 
+# Record the status for the next run
 lastStatus=${currentStatus}
 lastChecked=$(now)
 echo "${lastChecked} ${lastStatus} ${lastSent}" > ${lastHealthFile}
