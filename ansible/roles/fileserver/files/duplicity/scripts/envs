@@ -1,0 +1,2 @@
+export GS_ACCESS_KEY_ID="{{ gs_access_key_id }}"
+export GS_SECRET_ACCESS_KEY="{{ gs_access_key_secret }}"

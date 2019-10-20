@@ -1,0 +1,6 @@
+MAILTO=''
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+{{ backup_cron_sched_1 }} root /root/duplicity/backup.sh {{ backup_dir_1 }} {{ backup_bucket_1 }}
+{{ backup_cron_sched_2 }} root /root/duplicity/backup.sh {{ backup_dir_2 }} {{ backup_bucket_2 }}

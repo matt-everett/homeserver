@@ -1,0 +1,5 @@
+MAILTO=''
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+0 5 2 * * root /root/snapshot/snapshot.sh {{ snapshot_pool_1 }}

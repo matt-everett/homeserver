@@ -2,10 +2,91 @@
   apt: name={{ item }} state=present
   become: yes
   with_items:
-  - zfsutils-linux
   - samba
   - smbclient
   - cifs-utils
   - transmission-cli
   tags:
   - packages
+- name: Configure samba share
+  become: yes
+  blockinfile:
+    path: /etc/samba/smb.conf
+    marker: "# {mark} STORE CONFIG"
+    block: |
+      [{{ samba_share_1 }}]
+      comment = {{ samba_share_desc_1 }}
+      path = {{ samba_share_path_1 }}
+      browsable = yes
+      read only = no
+      guest ok = no
+- name: Add duplicity backup scripts
+  become: yes
+  template: src={{ role_path }}/files/duplicity/scripts/{{ item }} dest=/root/duplicity/{{ item }} owner=root group=root mode="0750" backup=yes
+  with_items:
+  - backup.sh
+  - status.sh
+  - envs
+- name: Add duplicity backup cron job
+  become: yes
+  template:
+    src: "{{ role_path }}/files/duplicity/cron.d/duplicity"
+    dest: /etc/cron.d/duplicity
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+- name: Add health check script
+  become: yes
+  template:
+    src: "{{ role_path }}/files/health-check/scripts/health-check.sh"
+    dest: /root/health-check/health-check.sh
+    owner: root
+    group: root
+    mode: '0750'
+    backup: yes
+- name: Add health check cron job
+  become: yes
+  copy:
+    src: "{{ role_path }}/files/health-check/cron.d/"
+    dest: /etc/cron.d/
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+- name: Add ZFS snapshot script
+  become: yes
+  copy:
+    src: "{{ role_path }}/files/snapshot/scripts/snapshot.sh"
+    dest: /root/snapshot/snapshot.sh
+    owner: root
+    group: root
+    mode: '0750'
+    backup: yes
+- name: Add ZFS snapshot cron job
+  become: yes
+  template:
+    src: "{{ role_path }}/files/snapshot/cron.d/snapshot"
+    dest: /etc/cron.d/snapshot
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+- name: Add ssmtp.conf for sending emails
+  become: yes
+  template:
+    src: "{{ role_path }}/files/ssmtp/ssmtp.conf"
+    dest: /etc/ssmtp/ssmtp.conf
+    owner: root
+    group: root
+    mode: '0640'
+    backup: yes
+- name: Add revaliases for sending emails
+  become: yes
+  template:
+    src: "{{ role_path }}/files/ssmtp/revaliases"
+    dest: /etc/ssmtp/revaliases
+    owner: root
+    group: root
+    mode: '0640'
+    backup: yes

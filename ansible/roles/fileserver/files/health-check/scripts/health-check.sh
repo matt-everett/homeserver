@@ -6,8 +6,8 @@ FAILURE_REPORT_FREQ='1 day'
 declare -A STATUSES=( [ONLINE]=0 [DEGRADED]=1 [OUTAGE]=3 )
 
 scriptDir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-lastHealthFile='/var/run/zfs-health'
-logFile='/var/log/zfs-health.log'
+lastHealthFile='/var/lib/health-check/data'
+logFile='/var/log/health-check.log'
 
 healthy=1
 outage=0
@@ -32,7 +32,8 @@ send_email () {
     report=$(mktemp)
 
     # Email headers
-    echo "Subject: homeserver status: ${currentStatus}" >> ${report}
+    echo "Subject: {{ ansible_hostname }} status: ${currentStatus}" >> ${report}
+    echo "From: {{ ansible_hostname }} <{{ smtp_email }}>" >> ${report}
     if [[ ${important} == 1 ]]; then
         echo "Importance: high" >> ${report}
     fi
@@ -44,7 +45,7 @@ send_email () {
     echo "</pre></body></html>" >> ${report}
 
     # Send the email
-    cat ${report} | ssmtp matt.g.everett@gmail.com
+    cat ${report} | ssmtp "{{ smtp_notification_email }}"
     
     # Clean up the temporary file
     rm ${report}
