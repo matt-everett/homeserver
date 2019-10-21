@@ -2,4 +2,4 @@ MAILTO=''
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-*/10 * * * * root /root/health-check/health-check.sh
+*/10 * * * * root /root/health-check/health-check.sh {{ ansible_hostname }} {{ smtp_email }} {{ smtp_notification_email }}

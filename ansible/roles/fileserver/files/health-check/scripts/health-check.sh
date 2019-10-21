@@ -12,6 +12,10 @@ logFile='/var/log/health-check.log'
 healthy=1
 outage=0
 
+hostname=${1}
+smtpEmail=${2}
+smtpNotificationEmail=${3}
+
 # Create a log entry
 log () {
     echo "[$(now)] INFO: ${1}" | tee -a ${logFile}
@@ -32,8 +36,8 @@ send_email () {
     report=$(mktemp)
 
     # Email headers
-    echo "Subject: {{ ansible_hostname }} status: ${currentStatus}" >> ${report}
-    echo "From: {{ ansible_hostname }} <{{ smtp_email }}>" >> ${report}
+    echo "Subject: ${hostname} status: ${currentStatus}" >> ${report}
+    echo "From: ${hostname} <${smtpEmail}>" >> ${report}
     if [[ ${important} == 1 ]]; then
         echo "Importance: high" >> ${report}
     fi
@@ -45,7 +49,7 @@ send_email () {
     echo "</pre></body></html>" >> ${report}
 
     # Send the email
-    cat ${report} | ssmtp "{{ smtp_notification_email }}"
+    cat ${report} | ssmtp "${smtpNotificationEmail}"
     
     # Clean up the temporary file
     rm ${report}
@@ -84,7 +88,7 @@ elif [[ ${healthy} == 0 && ${outage} == 0 ]]; then
 fi
 
 # Override the detected status for testing
-currentStatus=${1:-${currentStatus}}
+currentStatus=${4:-${currentStatus}}
 
 # Determine what action to take
 currentLevel=${STATUSES[${currentStatus}]}

@@ -56,7 +56,7 @@
     backup: yes
 - name: Add health check script
   become: yes
-  template:
+  copy:
     src: "{{ role_path }}/files/health-check/scripts/health-check.sh"
     dest: /root/health-check/health-check.sh
     owner: root
