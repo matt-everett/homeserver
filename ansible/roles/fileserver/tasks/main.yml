@@ -20,6 +20,24 @@
       browsable = yes
       read only = no
       guest ok = no
+- name: Add ssmtp.conf for sending emails
+  become: yes
+  template:
+    src: "{{ role_path }}/files/ssmtp/ssmtp.conf"
+    dest: /etc/ssmtp/ssmtp.conf
+    owner: root
+    group: root
+    mode: '0640'
+    backup: yes
+- name: Add revaliases for sending emails
+  become: yes
+  template:
+    src: "{{ role_path }}/files/ssmtp/revaliases"
+    dest: /etc/ssmtp/revaliases
+    owner: root
+    group: root
+    mode: '0640'
+    backup: yes
 - name: Add duplicity backup scripts
   become: yes
   template: src={{ role_path }}/files/duplicity/scripts/{{ item }} dest=/root/duplicity/{{ item }} owner=root group=root mode="0750" backup=yes
@@ -45,11 +63,24 @@
     group: root
     mode: '0750'
     backup: yes
-- name: Add health check cron job
+- name: Add health check tmpfiles.d config
   become: yes
   copy:
-    src: "{{ role_path }}/files/health-check/cron.d/"
-    dest: /etc/cron.d/
+    src: "{{ role_path }}/files/health-check/tmpfiles.d/health-check.conf"
+    dest: /usr/lib/tmpfiles.d/health-check.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+- name: Trigger creation of health-check state directory
+  command: systemd-tmpfiles --clean
+  args:
+    creates: /var/lib/health-check
+- name: Add health check cron job
+  become: yes
+  template:
+    src: "{{ role_path }}/files/health-check/cron.d/health-check"
+    dest: /etc/cron.d/health-check
     owner: root
     group: root
     mode: '0644'
@@ -71,22 +102,4 @@
     owner: root
     group: root
     mode: '0644'
-    backup: yes
-- name: Add ssmtp.conf for sending emails
-  become: yes
-  template:
-    src: "{{ role_path }}/files/ssmtp/ssmtp.conf"
-    dest: /etc/ssmtp/ssmtp.conf
-    owner: root
-    group: root
-    mode: '0640'
-    backup: yes
-- name: Add revaliases for sending emails
-  become: yes
-  template:
-    src: "{{ role_path }}/files/ssmtp/revaliases"
-    dest: /etc/ssmtp/revaliases
-    owner: root
-    group: root
-    mode: '0640'
     backup: yes
