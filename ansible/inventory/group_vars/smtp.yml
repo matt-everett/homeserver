@@ -1,0 +1,6 @@
+smtp_notification_email: remoteuser@gmail.com
+smtp_email: adminuser@gmail.com
+smtp_server: smtp.gmail.com:587
+smtp_rewrite_domain: gmail.com
+smtp_username: adminuser
+smtp_password: <vault-data>

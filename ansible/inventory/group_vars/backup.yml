@@ -1,0 +1,9 @@
+snapshot_pool_1: mystore
+backup_dir_1: /mystore/samba/shared
+backup_bucket_1: gs://homeserver-shared
+backup_cron_sched_1: 0 4 * * 1
+backup_dir_2: /mystore/samba/adminuser
+backup_bucket_2: gs://homeserver-adminuser
+backup_cron_sched_2: 0 3 1 * *
+gs_access_key_id: <vault-data>
+gs_access_key_secret: <vault-data>

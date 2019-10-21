@@ -1,0 +1,3 @@
+samba_share_1: mystore
+samba_share_path_1: /mystore/samba
+samba_share_desc_1: Samba store
