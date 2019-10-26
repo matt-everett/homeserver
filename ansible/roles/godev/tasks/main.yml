@@ -1,0 +1,6 @@
+- name: Install latest stable golang 
+  snap:
+    name: go
+    state: present
+    classic: yes
+    channel: stable

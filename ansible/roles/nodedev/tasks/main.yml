@@ -1,0 +1,8 @@
+- name: Install nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash
+    creates=/home/{{ ansible_user }}/.nvm/nvm.sh
+- name: Install latest stable node.js
+  shell: >
+    /bin/bash -c "source /home/{{ ansible_user }}/.nvm/nvm.sh && nvm install stable"
+    creates=/home/{{ ansible_user }}/.nvm/versions

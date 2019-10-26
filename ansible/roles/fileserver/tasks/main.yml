@@ -1,13 +1,13 @@
 - name: Install file server packages
-  apt: name={{ item }} state=present
   become: yes
-  with_items:
-  - samba
-  - smbclient
-  - cifs-utils
-  - transmission-cli
-  tags:
-  - packages
+  apt:
+    name:
+    - samba
+    - smbclient
+    - cifs-utils
+    - transmission-cli
+    state: present
+    force_apt_get: yes
 - name: Configure samba share
   become: yes
   blockinfile:

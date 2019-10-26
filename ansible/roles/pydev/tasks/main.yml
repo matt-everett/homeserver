@@ -1,24 +1,24 @@
 - name: Install basic necessities
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-  - python
-  - python-pip
-  - python3
-  - python3-pip
-  - libssl-dev
-  - build-essential
-  - zlib1g-dev
-  - libncurses5-dev
-  - libncursesw5-dev
-  - libreadline-dev
-  - libsqlite3-dev
-  - libgdbm-dev
-  - libdb5.3-dev
-  - libbz2-dev
-  - libexpat1-dev
-  - liblzma-dev
-  - libffi-dev
-  - uuid-dev
-  tags:
-  - packages
+  apt:
+    name:
+    - python
+    - python-pip
+    - python3
+    - python3-pip
+    - libssl-dev
+    - build-essential
+    - zlib1g-dev
+    - libncurses5-dev
+    - libncursesw5-dev
+    - libreadline-dev
+    - libsqlite3-dev
+    - libgdbm-dev
+    - libdb5.3-dev
+    - libbz2-dev
+    - libexpat1-dev
+    - liblzma-dev
+    - libffi-dev
+    - uuid-dev
+    state: present
+    force_apt_get: yes

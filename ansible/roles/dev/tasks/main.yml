@@ -1,11 +1,11 @@
 - name: Install development packages
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-  - tmux
-  - vim
-  tags:
-  - packages
+  apt:
+    name:
+    - tmux
+    - vim
+    state: present
+    force_apt_get: yes
 - name: Clone tmux-plugins manager
   git:
     repo: https://github.com/tmux-plugins/tpm

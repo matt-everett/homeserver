@@ -11,6 +11,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
 Plug 'vim-syntastic/syntastic'
 
 call plug#end()

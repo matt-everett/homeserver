@@ -2,10 +2,12 @@
   hosts: homeserver
   gather_facts: True
   roles:
-  - basic
-  - fileserver
-  - dev
-  - espdev
-  - pydev
-  - helm
-  - kubeclient
+    - basic
+    - fileserver
+    - dev
+    - espdev
+    - pydev
+    - nodedev
+    - godev
+    - helm
+    - kubeclient

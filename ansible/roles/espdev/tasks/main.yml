@@ -1,9 +1,9 @@
 - name: Install development packages
-  apt: name={{ item }} state=present
   become: yes
-  with_items:
-  - flex
-  - bison
-  - gperf
-  tags:
-  - packages
+  apt:
+    name:
+    - flex
+    - bison
+    - gperf
+    state: present
+    force_apt_get: yes
