@@ -4,3 +4,10 @@
     state: present
     classic: yes
     channel: stable
+- name: Configure .bashrc for GOBIN
+  blockinfile:
+    path: "/home/{{ ansible_user }}/.bashrc"
+    marker: "# {mark} GOLANG CONFIG"
+    block: |
+      export GOBIN=/home/{{ ansible_user }}/go/bin
+      export PATH=${PATH}:${GOBIN}

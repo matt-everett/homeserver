@@ -10,4 +10,5 @@
     - nodedev
     - godev
     - helm
+    - kube
     - kubeclient

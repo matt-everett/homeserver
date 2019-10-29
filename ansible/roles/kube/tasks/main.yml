@@ -1,0 +1,13 @@
+- name: Add openebs tmpfiles.d config
+  become: yes
+  copy:
+    src: "{{ role_path }}/files/openebs/tmpfiles.d/openebs.conf"
+    dest: /usr/lib/tmpfiles.d/openebs.conf
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+- name: Trigger creation of openebs state directory
+  command: systemd-tmpfiles --clean
+  args:
+    creates: /var/lib/openebs/local
