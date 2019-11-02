@@ -20,3 +20,11 @@
       set +f
       shopt -s extglob
       shopt -s globstar
+- name: Install yq
+  become: yes
+  pip:
+    name: yq
+- name: Install pyyaml
+  become: yes
+  pip:
+    name: pyyaml

@@ -1,11 +1,7 @@
-- name: Install basic necessities
+- name: Install python build dependencies
   become: yes
   apt:
     name:
-    - python
-    - python-pip
-    - python3
-    - python3-pip
     - libssl-dev
     - build-essential
     - zlib1g-dev
