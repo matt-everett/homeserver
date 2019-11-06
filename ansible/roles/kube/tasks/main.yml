@@ -10,4 +10,4 @@
 - name: Trigger creation of openebs state directory
   command: systemd-tmpfiles --clean
   args:
-    creates: /var/lib/openebs/local
+    creates: /var/openebs/local
