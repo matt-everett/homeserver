@@ -5,5 +5,6 @@
     - flex
     - bison
     - gperf
+    - libarchive-zip-perl
     state: present
     force_apt_get: yes
