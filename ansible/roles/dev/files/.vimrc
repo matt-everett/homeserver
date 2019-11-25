@@ -1,6 +1,6 @@
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
-set laststatus=2 noshowmode number
-set nowrap
+set laststatus=2 noshowmode number nowrap
+set smartcase hlsearch
 
 call plug#begin('~/.vim/plugged')
 
