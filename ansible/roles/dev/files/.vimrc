@@ -13,6 +13,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 Plug 'vim-syntastic/syntastic'
+Plug 'vim-scripts/ShowTrailingWhitespace'
 
 call plug#end()
 
