@@ -8,6 +8,15 @@
     - transmission-cli
     state: present
     force_apt_get: yes
+- name: Configure samba
+  become: yes
+  blockinfile:
+    path: /etc/samba/smb.conf
+    insertafter: "\[global\]"
+    marker: "# {mark} GLOBAL CONFIG"
+    block: |
+      server min protocol = SMB2_10
+      allow insecure wide links = yes
 - name: Configure samba share
   become: yes
   blockinfile:
@@ -20,6 +29,8 @@
       browsable = yes
       read only = no
       guest ok = no
+      follow symlinks = yes
+      wide links = yes
 - name: Add ssmtp.conf for sending emails
   become: yes
   template:
