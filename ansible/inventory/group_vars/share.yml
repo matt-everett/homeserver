@@ -1,3 +1,6 @@
 samba_share_1: mystore
 samba_share_path_1: /mystore/samba
 samba_share_desc_1: Samba store
+transmission_download_dir: /mystore/downloads
+transmission_watch_directory: /mystore/watch
+transmission_rpc_password: <transmission-rpc-password>
