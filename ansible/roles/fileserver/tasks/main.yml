@@ -114,3 +114,12 @@
     group: root
     mode: '0644'
     backup: yes
+- name: Add logrotate configuration
+  become: yes
+  copy:
+    src: "{{ role_path }}/files/logrotate/fileserver"
+    dest: /etc/logrotate.d/fileserver
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes

@@ -1,0 +1,22 @@
+/var/log/duplicity.log
+/var/log/snapshot.log
+{
+    rotate 10
+    yearly
+    missingok
+    notifempty
+    nocompress
+    extension log
+    dateext
+}
+
+/var/log/health-check.log
+{
+    rotate 12
+    monthly
+    missingok
+    notifempty
+    nocompress
+    extension log
+    dateext
+}
