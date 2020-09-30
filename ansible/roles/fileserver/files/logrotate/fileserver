@@ -1,6 +1,7 @@
 /var/log/duplicity.log
 /var/log/snapshot.log
 {
+    su root root
     rotate 10
     yearly
     missingok
@@ -12,6 +13,7 @@
 
 /var/log/health-check.log
 {
+    su root root
     rotate 12
     monthly
     missingok
